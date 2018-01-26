@@ -1,0 +1,8 @@
+knp_doctrine_behaviors:
+    translatable: true
+    blameable:      false
+    geocodable:     ~     # Here null is converted to false
+    loggable:       ~
+    sluggable:      ~
+    soft_deletable: ~
+    # All others behaviors are disabled

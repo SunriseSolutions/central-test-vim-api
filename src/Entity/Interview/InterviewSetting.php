@@ -1,12 +1,15 @@
 <?php
+
 namespace App\Entity\Interview;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -19,6 +22,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="interview__setting")
  */
 class InterviewSetting {
+	
+	use ORMBehaviors\Translatable\Translatable;
+	
 	/**
 	 * @return int
 	 */
@@ -36,6 +42,7 @@ class InterviewSetting {
 	
 	function __construct() {
 		$this->questions = new ArrayCollection();
+		$this->sessions  = new ArrayCollection();
 	}
 	
 	/**
@@ -63,14 +70,14 @@ class InterviewSetting {
 	protected $answerTimeLimit = 180;
 	
 	/**
-	 * @var ArrayCollection
+	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="InterviewSession", mappedBy="setting")
 	 * @ApiSubresource()
 	 */
 	protected $sessions;
 	
 	/**
-	 * @var ArrayCollection
+	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="InterviewQuestion", mappedBy="setting", cascade={"all"}, orphanRemoval=true)
 	 * @ApiSubresource()
 	 */
@@ -89,18 +96,6 @@ class InterviewSetting {
 	protected $logoUrl;
 	
 	/**
-	 * @var string
-	 * @ORM\Column(type="string", length=255)
-	 */
-	protected $title;
-	
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", length=255)
-	 */
-	protected $thankyouMessage;
-	
-	/**
 	 * @return bool
 	 */
 	public function isEnabled(): bool {
@@ -112,6 +107,20 @@ class InterviewSetting {
 	 */
 	public function setEnabled(bool $enabled): void {
 		$this->enabled = $enabled;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getExpireIn(): int {
+		return $this->expireIn;
+	}
+	
+	/**
+	 * @param int $expireIn
+	 */
+	public function setExpireIn(int $expireIn): void {
+		$this->expireIn = $expireIn;
 	}
 	
 	/**
@@ -145,6 +154,20 @@ class InterviewSetting {
 	/**
 	 * @return Collection
 	 */
+	public function getSessions(): Collection {
+		return $this->sessions;
+	}
+	
+	/**
+	 * @param Collection $sessions
+	 */
+	public function setSessions(Collection $sessions): void {
+		$this->sessions = $sessions;
+	}
+	
+	/**
+	 * @return Collection
+	 */
 	public function getQuestions(): Collection {
 		return $this->questions;
 	}
@@ -154,6 +177,20 @@ class InterviewSetting {
 	 */
 	public function setQuestions(Collection $questions): void {
 		$this->questions = $questions;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getClientCode(): string {
+		return $this->clientCode;
+	}
+	
+	/**
+	 * @param string $clientCode
+	 */
+	public function setClientCode(string $clientCode): void {
+		$this->clientCode = $clientCode;
 	}
 	
 	/**
@@ -170,59 +207,5 @@ class InterviewSetting {
 		$this->logoUrl = $logoUrl;
 	}
 	
-	/**
-	 * @return string
-	 */
-	public function getTitle(): string {
-		return $this->title;
-	}
 	
-	/**
-	 * @param string $title
-	 */
-	public function setTitle(string $title): void {
-		$this->title = $title;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getThankyouMessage(): string {
-		return $this->thankyouMessage;
-	}
-	
-	/**
-	 * @param string $thankyouMessage
-	 */
-	public function setThankyouMessage(string $thankyouMessage): void {
-		$this->thankyouMessage = $thankyouMessage;
-	}
-	
-	/**
-	 * @return int
-	 */
-	public function getExpireIn(): int {
-		return $this->expireIn;
-	}
-	
-	/**
-	 * @param int $expireIn
-	 */
-	public function setExpireIn(int $expireIn): void {
-		$this->expireIn = $expireIn;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getClientCode(): string {
-		return $this->clientCode;
-	}
-	
-	/**
-	 * @param string $clientCode
-	 */
-	public function setClientCode(string $clientCode): void {
-		$this->clientCode = $clientCode;
-	}
 }
