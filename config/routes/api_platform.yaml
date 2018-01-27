@@ -2,3 +2,9 @@ api_platform:
     resource: .
     type: api_platform
     prefix: /api
+
+api_login_check:
+    path: /api/login
+
+ctas_login_check:
+    path: /ctas/login

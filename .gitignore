@@ -1,3 +1,13 @@
+###> JWT ###
+!var/jwt
+/var/jwt/*
+!var/jwt/.gitkeep
+###< JWT ###
+###> MAIL SPOOL ###
+!var/spool
+/var/spool/*
+!var/spool/.gitkeep
+###< MAIL SPOOL ###
 ###> IDE ###
 .idea
 ###< IDE ###

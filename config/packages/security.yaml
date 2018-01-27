@@ -1,13 +1,69 @@
 security:
+    encoders:
+        Symfony\Component\Security\Core\User\User: bcrypt
+    role_hierarchy:
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: ~ }
+        in_memory:
+            memory:
+                users:
+                    ctas:
+                        password: '%env(CTAS_API_KEY)%'
+                        roles: 'ROLE_SUPER_ADMIN'
+        jwt:
+            lexik_jwt:
+                class: App\Security\JWTUser
+
+
+# $2y$13$zW3Nq2WrYBNlhDcosTH.peP/43wNoa4eirfrcS8ZfZQeop6A2HQBi
     firewalls:
+        ctas:
+            pattern:  ^/ctas
+            stateless: true
+            anonymous: true
+            form_login:
+                provider: in_memory
+                check_path:               /ctas/login
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+                username_parameter: _username
+                password_parameter: _apikey
+                require_previous_session: false
+
+        api_login:
+            pattern:  ^/api/login
+            stateless: true
+            anonymous: true
+            form_login:
+                provider: in_memory
+                check_path:               /api/login
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+                require_previous_session: false
+
+        api:
+            pattern:   ^/api
+            stateless: true
+            anonymous: true
+            provider: jwt
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: ~
+            form_login:
+                provider: in_memory
+                login_path:               'login'
+                check_path:               'login'
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+                require_previous_session: false
 
             # activate different ways to authenticate
 
@@ -16,3 +72,9 @@ security:
 
             # form_login: ~
             # https://symfony.com/doc/current/security/form_login_setup.html
+    access_control:
+        - { path: ^/ctas, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: ['%env(CTAS_IP)%'] }
+        - { path: ^/ctas, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1] }
+        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
