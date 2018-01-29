@@ -1,12 +1,13 @@
 <?php
+
 namespace App\Entity\Interview;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
-use App\Entity\Experiment1;
-use App\Entity\MappedSuperClassExperiment1;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ApiResource()
@@ -14,12 +15,65 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="interview__session")
  */
-class InterviewSession{
+class InterviewSession implements UserInterface, \Serializable {
+	
+	/////// Start of UserInterface Impl ///////
+	public function getUsername() {
+		return $this->candidateCode;
+	}
+	
+	public function getSalt() {
+		// you *may* need a real salt depending on your encoder
+		// see section on salt below
+		return null;
+	}
+	
+	public function getPassword() {
+		return $this->employerCode;
+	}
+	
+	public function getRoles() {
+		return array( 'ROLE_CANDIDATE' );
+	}
+	
+	public function eraseCredentials() {
+	}
+	
+	/** @see \Serializable::serialize() */
+	public function serialize() {
+		return serialize(array(
+			$this->id,
+			
+			$this->candidateCode,
+			$this->employerCode,
+			
+			// see section on salt below
+			// $this->salt,
+		));
+	}
+	
+	/** @see \Serializable::unserialize() */
+	public function unserialize($serialized) {
+		list (
+			$this->id,
+			
+			$this->candidateCode,
+			$this->employerCode,
+			// see section on salt below
+			// $this->salt
+			) = unserialize($serialized);
+	}
+	/////// End of UserInterface Impl ///////
+	///
 	/**
 	 * @return int
 	 */
 	public function getId(): int {
 		return $this->id;
+	}
+	
+	function __construct() {
+		$this->answers = new ArrayCollection();
 	}
 	
 	/**
@@ -54,7 +108,7 @@ class InterviewSession{
 	
 	/**
 	 * E:\xampp71\htdocs\projects\inspot\vendor\api-platform\core\src\Swagger\Serializer\DocumentationNormalizer.php
-	 * @var ArrayCollection
+	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="InterviewAnswer", mappedBy="session", cascade={"persist","merge"}, orphanRemoval=true)
 	 * @ApiSubresource()
 	 */
@@ -126,6 +180,104 @@ class InterviewSession{
 	 * @ORM\Column(type="text")
 	 */
 	protected $thankyouMessage;
+	
+	/**
+	 * @return InterviewSession
+	 */
+	public function getPracticeSession(): ?InterviewSession {
+		return $this->practiceSession;
+	}
+	
+	/**
+	 * @param InterviewSession $practiceSession
+	 */
+	public function setPracticeSession(InterviewSession $practiceSession): void {
+		$this->practiceSession = $practiceSession;
+	}
+	
+	/**
+	 * @return InterviewSession
+	 */
+	public function getActualSession(): ?InterviewSession {
+		return $this->actualSession;
+	}
+	
+	/**
+	 * @param InterviewSession $actualSession
+	 */
+	public function setActualSession(InterviewSession $actualSession): void {
+		$this->actualSession = $actualSession;
+	}
+	
+	/**
+	 * @return InterviewSetting
+	 */
+	public function getSetting(): InterviewSetting {
+		return $this->setting;
+	}
+	
+	/**
+	 * @param InterviewSetting $setting
+	 */
+	public function setSetting(InterviewSetting $setting): void {
+		$this->setting = $setting;
+	}
+	
+	/**
+	 * @return Collection
+	 */
+	public function getAnswers(): Collection {
+		return $this->answers;
+	}
+	
+	/**
+	 * @param Collection $answers
+	 */
+	public function setAnswers(Collection $answers): void {
+		$this->answers = $answers;
+	}
+	
+	/**
+	 * @return \DateTime
+	 */
+	public function getDeadline(): \DateTime {
+		return $this->deadline;
+	}
+	
+	/**
+	 * @param \DateTime $deadline
+	 */
+	public function setDeadline(\DateTime $deadline): void {
+		$this->deadline = $deadline;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getReadingTimeLimit(): int {
+		return $this->readingTimeLimit;
+	}
+	
+	/**
+	 * @param int $readingTimeLimit
+	 */
+	public function setReadingTimeLimit(int $readingTimeLimit): void {
+		$this->readingTimeLimit = $readingTimeLimit;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getAnswerTimeLimit(): int {
+		return $this->answerTimeLimit;
+	}
+	
+	/**
+	 * @param int $answerTimeLimit
+	 */
+	public function setAnswerTimeLimit(int $answerTimeLimit): void {
+		$this->answerTimeLimit = $answerTimeLimit;
+	}
 	
 	/**
 	 * @return bool
@@ -226,90 +378,6 @@ class InterviewSession{
 	}
 	
 	/**
-	 * @return \DateTime
-	 */
-	public function getDeadline(): \DateTime {
-		return $this->deadline;
-	}
-	
-	/**
-	 * @param \DateTime $deadline
-	 */
-	public function setDeadline(\DateTime $deadline): void {
-		$this->deadline = $deadline;
-	}
-	
-	/**
-	 * @return InterviewSession
-	 */
-	public function getPracticeSession(): InterviewSession {
-		return $this->practiceSession;
-	}
-	
-	/**
-	 * @param InterviewSession $practiceSession
-	 */
-	public function setPracticeSession(InterviewSession $practiceSession): void {
-		$this->practiceSession = $practiceSession;
-	}
-	
-	/**
-	 * @return InterviewSession
-	 */
-	public function getActualSession(): InterviewSession {
-		return $this->actualSession;
-	}
-	
-	/**
-	 * @param InterviewSession $actualSession
-	 */
-	public function setActualSession(InterviewSession $actualSession): void {
-		$this->actualSession = $actualSession;
-	}
-	
-	/**
-	 * @return InterviewSetting
-	 */
-	public function getSetting(): InterviewSetting {
-		return $this->setting;
-	}
-	
-	/**
-	 * @param InterviewSetting $setting
-	 */
-	public function setSetting(InterviewSetting $setting): void {
-		$this->setting = $setting;
-	}
-	
-	/**
-	 * @return int
-	 */
-	public function getReadingTimeLimit(): int {
-		return $this->readingTimeLimit;
-	}
-	
-	/**
-	 * @param int $readingTimeLimit
-	 */
-	public function setReadingTimeLimit(int $readingTimeLimit): void {
-		$this->readingTimeLimit = $readingTimeLimit;
-	}
-	
-	/**
-	 * @return int
-	 */
-	public function getAnswerTimeLimit(): int {
-		return $this->answerTimeLimit;
-	}
-	
-	/**
-	 * @param int $answerTimeLimit
-	 */
-	public function setAnswerTimeLimit(int $answerTimeLimit): void {
-		$this->answerTimeLimit = $answerTimeLimit;
-	}
-	
-	/**
 	 * @return string
 	 */
 	public function getLogoUrl(): string {
@@ -337,17 +405,4 @@ class InterviewSession{
 		$this->thankyouMessage = $thankyouMessage;
 	}
 	
-	/**
-	 * @return ArrayCollection
-	 */
-	public function getAnswers(): ArrayCollection {
-		return $this->answers;
-	}
-	
-	/**
-	 * @param ArrayCollection $answers
-	 */
-	public function setAnswers(ArrayCollection $answers): void {
-		$this->answers = $answers;
-	}
 }
