@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Entity\Interview;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use App\Entity\Recruitment\Recruiter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -65,13 +65,6 @@ class InterviewSession implements UserInterface, \Serializable {
 	}
 	/////// End of UserInterface Impl ///////
 	///
-	/**
-	 * @return int
-	 */
-	public function getId(): int {
-		return $this->id;
-	}
-	
 	function __construct() {
 		$this->answers = new ArrayCollection();
 	}
@@ -98,6 +91,13 @@ class InterviewSession implements UserInterface, \Serializable {
 	 * @ApiSubresource()
 	 */
 	protected $actualSession;
+	
+	/**
+	 * @var Recruiter
+	 * @ORM\ManyToOne(targetEntity="App\Entity\Recruitment\Recruiter",inversedBy="sessions")
+	 * @ORM\JoinColumn(name="id_recruiter", referencedColumnName="id", onDelete="CASCADE")
+	 */
+	protected $recruiter;
 	
 	/**
 	 * @var InterviewSetting
@@ -154,6 +154,12 @@ class InterviewSession implements UserInterface, \Serializable {
 	
 	/**
 	 * @var string
+	 * @ORM\Column(type="string", length=500)
+	 */
+	protected $title;
+	
+	/**
+	 * @var string
 	 * @ORM\Column(type="string", length=255)
 	 */
 	protected $candidateCode;
@@ -168,7 +174,13 @@ class InterviewSession implements UserInterface, \Serializable {
 	 * @var string
 	 * @ORM\Column(type="string", length=255)
 	 */
-	protected $clientCode;
+	protected $candidateId;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", length=255)
+	 */
+	protected $candidateName;
 	
 	/**
 	 * @var string
@@ -180,11 +192,23 @@ class InterviewSession implements UserInterface, \Serializable {
 	 * @ORM\Column(type="text")
 	 */
 	protected $thankyouMessage;
+
+////////////////////////////////////////////
+///
+/// DO NOT DELETE getId()
+///
+////////////////////////////////////////////
+	/**
+	 * @return int
+	 */
+	public function getId(): int {
+		return $this->id;
+	}
 	
 	/**
 	 * @return InterviewSession
 	 */
-	public function getPracticeSession(): ?InterviewSession {
+	public function getPracticeSession(): InterviewSession {
 		return $this->practiceSession;
 	}
 	
@@ -198,7 +222,7 @@ class InterviewSession implements UserInterface, \Serializable {
 	/**
 	 * @return InterviewSession
 	 */
-	public function getActualSession(): ?InterviewSession {
+	public function getActualSession(): InterviewSession {
 		return $this->actualSession;
 	}
 	
@@ -366,15 +390,29 @@ class InterviewSession implements UserInterface, \Serializable {
 	/**
 	 * @return string
 	 */
-	public function getClientCode(): string {
-		return $this->clientCode;
+	public function getCandidateId(): string {
+		return $this->candidateId;
 	}
 	
 	/**
-	 * @param string $clientCode
+	 * @param string $candidateId
 	 */
-	public function setClientCode(string $clientCode): void {
-		$this->clientCode = $clientCode;
+	public function setCandidateId(string $candidateId): void {
+		$this->candidateId = $candidateId;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getCandidateName(): string {
+		return $this->candidateName;
+	}
+	
+	/**
+	 * @param string $candidateName
+	 */
+	public function setCandidateName(string $candidateName): void {
+		$this->candidateName = $candidateName;
 	}
 	
 	/**
@@ -405,4 +443,31 @@ class InterviewSession implements UserInterface, \Serializable {
 		$this->thankyouMessage = $thankyouMessage;
 	}
 	
+	/**
+	 * @return Recruiter
+	 */
+	public function getRecruiter(): Recruiter {
+		return $this->recruiter;
+	}
+	
+	/**
+	 * @param Recruiter $recruiter
+	 */
+	public function setRecruiter(Recruiter $recruiter): void {
+		$this->recruiter = $recruiter;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getTitle(): string {
+		return $this->title;
+	}
+	
+	/**
+	 * @param string $title
+	 */
+	public function setTitle(string $title): void {
+		$this->title = $title;
+	}
 }

@@ -5,6 +5,7 @@ namespace App\Entity\Interview;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use App\Entity\Recruitment\Recruiter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -70,6 +71,13 @@ class InterviewSetting {
 	protected $answerTimeLimit = 180;
 	
 	/**
+	 * @var Recruiter
+	 * @ORM\ManyToOne(targetEntity="App\Entity\Recruitment\Recruiter",inversedBy="interviews")
+	 * @ORM\JoinColumn(name="id_recruiter", referencedColumnName="id", onDelete="CASCADE")
+	 */
+	protected $recruiter;
+	
+	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="InterviewSession", mappedBy="setting")
 	 * @ApiSubresource()
@@ -85,9 +93,9 @@ class InterviewSetting {
 	
 	/**
 	 * @var string
-	 * @ORM\Column(type="string", length=125)
+	 * @ORM\Column(type="string", length=500)
 	 */
-	protected $clientCode;
+	protected $title;
 	
 	/**
 	 * @var string
@@ -207,5 +215,32 @@ class InterviewSetting {
 		$this->logoUrl = $logoUrl;
 	}
 	
+	/**
+	 * @return Recruiter
+	 */
+	public function getRecruiter(): Recruiter {
+		return $this->recruiter;
+	}
+	
+	/**
+	 * @param Recruiter $recruiter
+	 */
+	public function setRecruiter(Recruiter $recruiter): void {
+		$this->recruiter = $recruiter;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getTitle(): string {
+		return $this->title;
+	}
+	
+	/**
+	 * @param string $title
+	 */
+	public function setTitle(string $title): void {
+		$this->title = $title;
+	}
 	
 }
