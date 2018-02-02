@@ -55,6 +55,18 @@ class Recruiter {
 	 * @ORM\Column(type="string", length=50)
 	 */
 	protected $recruiterId;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", length=255)
+	 */
+	protected $employerCode;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", length=50)
+	 */
+	protected $adminEmail;
 //////////////////////////////////////
 ///
 ///
@@ -109,4 +121,31 @@ class Recruiter {
 		$this->recruiterId = $recruiterId;
 	}
 	
+	/**
+	 * @return string
+	 */
+	public function getEmployerCode(): string {
+		return $this->employerCode;
+	}
+	
+	/**
+	 * @param string $employerCode
+	 */
+	public function setEmployerCode(string $employerCode): void {
+		$this->employerCode = $employerCode;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getAdminEmail(): string {
+		return $this->adminEmail;
+	}
+	
+	/**
+	 * @param string $adminEmail
+	 */
+	public function setAdminEmail(string $adminEmail): void {
+		$this->adminEmail = $adminEmail;
+	}
 }
