@@ -71,6 +71,9 @@
     "doctrine/orm": {
         "version": "v2.6.0"
     },
+    "gesdinet/jwt-refresh-token-bundle": {
+        "version": "v0.3.2"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },

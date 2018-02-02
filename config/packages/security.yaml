@@ -63,6 +63,11 @@ security:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
 
+        refresh:
+            pattern:  ^/api/token/refresh
+            stateless: true
+            anonymous: true
+
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -79,5 +84,8 @@ security:
         - { path: ^/ctas, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: ['%env(CTAS_IP)%'] }
         - { path: ^/ctas, roles: ROLE_SUPER_ADMIN }
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1] }
+        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: ['%env(DEV_IP)%'] }
         - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+        # ...
+        - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # ...
