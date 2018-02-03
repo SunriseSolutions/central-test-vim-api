@@ -31,6 +31,52 @@ class Recruiter {
 	 */
 	protected $id;
 	
+	public static function generate4CharacterCode($code = null) {
+		if($code === null) {
+			$code = base_convert(rand(0, 1679615), 10, 36);
+		}
+		for($i = 0; $i < 4 - strlen($code);) {
+			$code = '0' . $code;
+		}
+		
+		return $code;
+	}
+	
+	
+	public function generate4DigitCode($code = null) {
+		if(empty($code)) {
+			$code = rand(0, 9999);
+		}
+		
+		$codeStr = '';
+		for($n = 3; $code < pow(10, $n); $n --) {
+			$codeStr .= strtoupper(chr(rand(97, 122)));
+		}
+		$codeStr .= $code;
+		
+		return $codeStr;
+	}
+	
+	public function initiateEmployerCode() {
+		if(empty($this->employerCode)) {
+			$date      = new \DateTime();
+			$timestamp = $date->getTimestamp();
+			$tsStr     = substr(chunk_split($timestamp, 4, "-"), 0, - 1);
+			$tsArray   = explode('-', $tsStr);
+			
+			for($i = 0; $i < count($tsArray); $i ++) {
+				$part          = $tsArray[ $i ];
+				$tsArray[ $i ] = $this->generate4DigitCode($part);
+			}
+			
+			$this->employerCode = strtoupper(chr(rand(97, 122))) . strtoupper(chr(rand(97, 122))) . strtoupper(chr(rand(97, 122))) . strtoupper(chr(rand(97, 122))) . '-' . implode('-', $tsArray);
+			
+			
+		}
+		
+		return $this->employerCode;
+	}
+	
 	function __construct() {
 		$this->sessions = new ArrayCollection();
 	}
