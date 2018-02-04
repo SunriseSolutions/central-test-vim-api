@@ -17,7 +17,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * To hold data about the InterviewSetting.
  * @ApiResource(attributes={
- * })
+ * },
+ *     iri="http://schema.org/Book"
+ *     )
  *
  * @ORM\Entity()
  * @ORM\Table(name="interview__setting")
@@ -25,13 +27,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class InterviewSetting {
 	
 	use ORMBehaviors\Translatable\Translatable;
-	
-	/**
-	 * @return int
-	 */
-	public function getId(): int {
-		return $this->id;
-	}
 	
 	/**
 	 * @var int
@@ -103,6 +98,19 @@ class InterviewSetting {
 	 */
 	protected $logoUrl;
 	
+	///////////////////////////////////////
+	///
+	///
+	///
+	///////////////////////////////////////
+	
+	/**
+	 * @return int
+	 */
+	public function getId(): int {
+		return $this->id;
+	}
+	
 	/**
 	 * @return bool
 	 */
@@ -160,6 +168,20 @@ class InterviewSetting {
 	}
 	
 	/**
+	 * @return Recruiter
+	 */
+	public function getRecruiter(): ?Recruiter {
+		return $this->recruiter;
+	}
+	
+	/**
+	 * @param Recruiter $recruiter
+	 */
+	public function setRecruiter($recruiter): void {
+		$this->recruiter = $recruiter;
+	}
+	
+	/**
 	 * @return Collection
 	 */
 	public function getSessions(): Collection {
@@ -190,15 +212,15 @@ class InterviewSetting {
 	/**
 	 * @return string
 	 */
-	public function getClientCode(): string {
-		return $this->clientCode;
+	public function getTitle(): string {
+		return $this->title;
 	}
 	
 	/**
-	 * @param string $clientCode
+	 * @param string $title
 	 */
-	public function setClientCode(string $clientCode): void {
-		$this->clientCode = $clientCode;
+	public function setTitle(string $title): void {
+		$this->title = $title;
 	}
 	
 	/**
@@ -213,34 +235,6 @@ class InterviewSetting {
 	 */
 	public function setLogoUrl(string $logoUrl): void {
 		$this->logoUrl = $logoUrl;
-	}
-	
-	/**
-	 * @return Recruiter
-	 */
-	public function getRecruiter(): Recruiter {
-		return $this->recruiter;
-	}
-	
-	/**
-	 * @param Recruiter $recruiter
-	 */
-	public function setRecruiter(Recruiter $recruiter): void {
-		$this->recruiter = $recruiter;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getTitle(): string {
-		return $this->title;
-	}
-	
-	/**
-	 * @param string $title
-	 */
-	public function setTitle(string $title): void {
-		$this->title = $title;
 	}
 	
 }

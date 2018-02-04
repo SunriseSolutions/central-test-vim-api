@@ -8,6 +8,7 @@
         "gesdinet/jwt-refresh-token-bundle": "^0.3.2",
         "knplabs/doctrine-behaviors": "^1.5",
         "lexik/jwt-authentication-bundle": "^2.4",
+        "nelmio/cors-bundle": "^1.5",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/console": "^4.0",
         "symfony/flex": "^1.0",
@@ -17,6 +18,7 @@
         "symfony/yaml": "^4.0"
     },
     "require-dev": {
+        "api-platform/schema-generator": "^2.0",
         "symfony/dotenv": "^4.0"
     },
     "config": {
