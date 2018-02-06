@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * },
 )
  * @ORM\Entity()
- * @ORM\Table(name="interview__setting_translation")
+ * @ORM\Table(name="interview__question_translation")
  */
 class InterviewQuestionTranslation {
 	
