@@ -37,7 +37,7 @@ class InterviewAnswer {
 	
 	/**
 	 * @var \DateTime
-	 * @ORM\Column(type="utc_datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $deadline;
 	

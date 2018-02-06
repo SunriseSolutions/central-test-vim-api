@@ -17,9 +17,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * To hold data about the InterviewSetting.
  * @ApiResource(attributes={
+ *     "filters"={"interview_setting.search_filter"},
+ *     "order"={"updatedAt": "DESC","createdAt": "DESC"},
+ *     "normalization_context"={"groups"={"read_interview_setting"}},
+ *     "denormalization_context"={"groups"={"write_interview_setting"}}
  * },
- *     iri="http://schema.org/Book"
- *     )
+ )
  *
  * @ORM\Entity()
  * @ORM\Table(name="interview__setting")
@@ -39,7 +42,42 @@ class InterviewSetting {
 	function __construct() {
 		$this->questions = new ArrayCollection();
 		$this->sessions  = new ArrayCollection();
+		$this->createdAt = new \DateTime();
 	}
+	
+	/**
+	 * @var Recruiter
+	 * @ORM\ManyToOne(targetEntity="App\Entity\Recruitment\Recruiter",inversedBy="interviews")
+	 * @ORM\JoinColumn(name="id_recruiter", referencedColumnName="id", onDelete="CASCADE")
+	 * @Groups({"read_interview_setting","write_interview_setting"})
+	 */
+	protected $recruiter;
+	
+	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="InterviewSession", mappedBy="setting")
+	 * ApiSubresource()
+	 */
+	protected $sessions;
+	
+	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="InterviewQuestion", mappedBy="setting", cascade={"all"}, orphanRemoval=true)
+	 * ApiSubresource()
+	 */
+	protected $questions;
+	
+	/**
+	 * @var \DateTime
+	 * @ORM\Column(type="datetime")
+	 */
+	protected $createdAt;
+	
+	/**
+	 * @var \DateTime
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	protected $updatedAt;
 	
 	/**
 	 * @var boolean
@@ -66,35 +104,8 @@ class InterviewSetting {
 	protected $answerTimeLimit = 180;
 	
 	/**
-	 * @var Recruiter
-	 * @ORM\ManyToOne(targetEntity="App\Entity\Recruitment\Recruiter",inversedBy="interviews")
-	 * @ORM\JoinColumn(name="id_recruiter", referencedColumnName="id", onDelete="CASCADE")
-	 */
-	protected $recruiter;
-	
-	/**
-	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="InterviewSession", mappedBy="setting")
-	 * ApiSubresource()
-	 */
-	protected $sessions;
-	
-	/**
-	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="InterviewQuestion", mappedBy="setting", cascade={"all"}, orphanRemoval=true)
-	 * ApiSubresource()
-	 */
-	protected $questions;
-	
-	/**
 	 * @var string
-	 * @ORM\Column(type="string", length=500)
-	 */
-	protected $title;
-	
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", length=500)
+	 * @ORM\Column(type="string", length=500, nullable=true)
 	 */
 	protected $logoUrl;
 	
@@ -210,17 +221,31 @@ class InterviewSetting {
 	}
 	
 	/**
-	 * @return string
+	 * @return \DateTime
 	 */
-	public function getTitle(): string {
-		return $this->title;
+	public function getCreatedAt(): \DateTime {
+		return $this->createdAt;
 	}
 	
 	/**
-	 * @param string $title
+	 * @param \DateTime $createdAt
 	 */
-	public function setTitle(string $title): void {
-		$this->title = $title;
+	public function setCreatedAt(\DateTime $createdAt): void {
+		$this->createdAt = $createdAt;
+	}
+	
+	/**
+	 * @return \DateTime
+	 */
+	public function getUpdatedAt(): \DateTime {
+		return $this->updatedAt;
+	}
+	
+	/**
+	 * @param \DateTime $updatedAt
+	 */
+	public function setUpdatedAt(\DateTime $updatedAt): void {
+		$this->updatedAt = $updatedAt;
 	}
 	
 	/**
@@ -236,5 +261,6 @@ class InterviewSetting {
 	public function setLogoUrl(string $logoUrl): void {
 		$this->logoUrl = $logoUrl;
 	}
+	
 	
 }

@@ -14,10 +14,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * To hold data about the InterviewSetting.
+ * To translate the InterviewSetting.
  * @ApiResource(attributes={
- * })
- *
+ *     "filters"={"interview_setting__translation.search_filter", "interview_setting__translation.boolean_filter"},
+ * },
+)
  * @ORM\Entity()
  * @ORM\Table(name="interview__setting_translation")
  */

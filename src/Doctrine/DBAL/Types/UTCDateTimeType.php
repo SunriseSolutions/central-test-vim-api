@@ -11,7 +11,7 @@ class UTCDateTimeType extends DateTimeType {
 	
 	public function getName()
 	{
-		return 'utc_datetime';
+		return 'datetime';
 	}
 	
 	private static function getUtc() {

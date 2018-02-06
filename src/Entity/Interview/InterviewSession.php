@@ -8,9 +8,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={
+ *     "filters"={"interview_session.search_filter"},
+ *     "order"={"updatedAt": "DESC","createdAt": "DESC"},
+ *     "normalization_context"={"groups"={"read_interview_session"}},
+ *     "denormalization_context"={"groups"={"write_interview_session"}}
+ * },
+)
  *
  * @ORM\Entity()
  * @ORM\Table(name="interview__session")
@@ -103,6 +110,7 @@ class InterviewSession implements UserInterface, \Serializable {
 	 * @var InterviewSetting
 	 * @ORM\ManyToOne(targetEntity="InterviewSetting",inversedBy="sessions")
 	 * @ORM\JoinColumn(name="id_setting", referencedColumnName="id", onDelete="SET NULL")
+	 * @Groups({"read_interview_session","write_interview_session"})
 	 */
 	protected $setting;
 	
@@ -116,83 +124,108 @@ class InterviewSession implements UserInterface, \Serializable {
 	
 	/**
 	 * @var \DateTime
-	 * @ORM\Column(type="utc_datetime")
+	 * @ORM\Column(type="datetime")
+	 * @Groups({"read_interview_session","write_interview_session"})
 	 */
 	protected $deadline;
 	
 	/**
 	 * @var integer
 	 * @ORM\Column(type="integer")
+	 * @Groups({"read_interview_session","write_interview_session"})
 	 */
 	protected $readingTimeLimit;
+	
 	/**
 	 * @var integer
 	 * @ORM\Column(type="integer")
+	 * @Groups({"read_interview_session","write_interview_session"})
 	 */
 	protected $answerTimeLimit;
 	
 	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
+	 * @Groups({"read_interview_session"})
 	 */
 	protected $completed = false;
+	
 	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
+	 * @Groups({"read_interview_session","write_interview_session"})
 	 */
 	protected $enabled = true;
+	
 	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
+	 * @Groups({"read_interview_session"})
 	 */
 	protected $mock = false;
+	
 	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
+	 * @Groups({"read_interview_session"})
 	 */
 	protected $started = false;
 	
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=500)
+	 * @Groups({"read_interview_session","write_interview_session"})
 	 */
 	protected $title;
 	
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=255)
+	 * @Groups({"read_interview_session"})
 	 */
 	protected $candidateCode;
 	
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=255)
+	 * @Groups({"read_interview_session"})
 	 */
 	protected $employerCode;
 	
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=255)
+	 * @Groups({"read_interview_session","write_interview_session"})
 	 */
 	protected $candidateId;
 	
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=255)
+	 * @Groups({"read_interview_session","write_interview_session"})
+	 */
+	protected $candidateEmail;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", length=255)
+	 * @Groups({"read_interview_session","write_interview_session"})
 	 */
 	protected $candidateName;
 	
 	/**
 	 * @var string
-	 * @ORM\Column(type="string", length=255)
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 * @Groups({"read_interview_session","write_interview_session"})
 	 */
 	protected $logoUrl;
+	
 	/**
 	 * @var string
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text", nullable=true)
+	 * @Groups({"read_interview_session","write_interview_session"})
 	 */
 	protected $thankyouMessage;
-
 ////////////////////////////////////////////
 ///
 /// DO NOT DELETE getId()
@@ -470,4 +503,19 @@ class InterviewSession implements UserInterface, \Serializable {
 	public function setTitle(string $title): void {
 		$this->title = $title;
 	}
+	
+	/**
+	 * @return string
+	 */
+	public function getCandidateEmail(): string {
+		return $this->candidateEmail;
+	}
+	
+	/**
+	 * @param string $candidateEmail
+	 */
+	public function setCandidateEmail(string $candidateEmail): void {
+		$this->candidateEmail = $candidateEmail;
+	}
+	
 }

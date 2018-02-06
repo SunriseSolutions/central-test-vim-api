@@ -17,3 +17,52 @@ api_platform:
         yaml:    ['application/x-yaml']
         csv:     ['text/csv']
         html:    ['text/html']
+
+
+    collection:
+        pagination:
+            # To enable or disable pagination for all resource collections by default.
+            enabled: true
+
+            # To allow the client to enable or disable the pagination.
+            client_enabled: false
+
+            # To allow the client to set the number of items per page.
+            # Default: false
+            client_items_per_page: true
+
+            # The default number of items per page.
+            items_per_page: 30
+
+            # The maximum number of items per page.
+            maximum_items_per_page: 500
+
+            # The default name of the parameter handling the page number.
+            page_parameter_name: 'page'
+
+            # The name of the query parameter to enable or disable pagination.
+            enabled_parameter_name: 'pagination'
+
+            # The name of the query parameter to set the number of items per page.
+            items_per_page_parameter_name: 'itemsPerPage'
+
+services:
+    interview_setting.search_filter:
+        parent: 'api_platform.doctrine.orm.search_filter'
+        arguments: [ { recruiter: 'exact', title: 'partial' } ]
+        tags: [ 'api_platform.filter' ]
+
+    interview_session.search_filter:
+        parent: 'api_platform.doctrine.orm.search_filter'
+        arguments: [ { setting: 'exact', employerCode: 'exact', candidateCode: 'exact', title: 'partial' } ]
+        tags: [ 'api_platform.filter' ]
+
+    interview_setting__translation.search_filter:
+        parent: 'api_platform.doctrine.orm.search_filter'
+        arguments: [ { translatable: 'exact', title: 'partial', locale: 'exact' } ]
+        tags: [ 'api_platform.filter' ]
+
+    interview_setting__translation.boolean_filter:
+        parent: 'api_platform.doctrine.orm.boolean_filter'
+        arguments: [ { empty: ~ } ]
+        tags: [ 'api_platform.filter' ]
