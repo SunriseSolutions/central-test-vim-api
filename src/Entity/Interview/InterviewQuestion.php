@@ -54,18 +54,6 @@ class InterviewQuestion {
 	protected $position = 1;
 	
 	/**
-	 * @var string
-	 * @ORM\Column(type="string", length=125)
-	 */
-	protected $name;
-	
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", length=125)
-	 */
-	protected $text;
-	
-	/**
 	 * @return InterviewSetting
 	 */
 	public function getSetting(): InterviewSetting {
@@ -77,48 +65,6 @@ class InterviewQuestion {
 	 */
 	public function setSetting(InterviewSetting $setting): void {
 		$this->setting = $setting;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getPosition(): string {
-		return $this->position;
-	}
-	
-	/**
-	 * @param string $position
-	 */
-	public function setPosition(string $position): void {
-		$this->position = $position;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getName(): string {
-		return $this->name;
-	}
-	
-	/**
-	 * @param string $name
-	 */
-	public function setName(string $name): void {
-		$this->name = $name;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getText(): string {
-		return $this->text;
-	}
-	
-	/**
-	 * @param string $text
-	 */
-	public function setText(string $text): void {
-		$this->text = $text;
 	}
 	
 	/**
@@ -148,4 +94,19 @@ class InterviewQuestion {
 	public function setAnswerTimeLimit(int $answerTimeLimit): void {
 		$this->answerTimeLimit = $answerTimeLimit;
 	}
+	
+	/**
+	 * @return string
+	 */
+	public function getPosition(): string {
+		return $this->position;
+	}
+	
+	/**
+	 * @param string $position
+	 */
+	public function setPosition(string $position): void {
+		$this->position = $position;
+	}
+
 }

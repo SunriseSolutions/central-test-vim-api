@@ -28,41 +28,43 @@ class InterviewQuestionTranslation {
 	
 	/**
 	 * @var string
-	 * @ORM\Column(type="string", length=255)
+	 * @ORM\Column(type="string", length=125)
 	 */
-	protected $title;
+	protected $name;
 	
 	/**
 	 * @var string
-	 * @ORM\Column(type="string", length=255)
+	 * @ORM\Column(type="string", length=125)
 	 */
-	protected $thankyouMessage;
+	protected $text;
 	
 	/**
 	 * @return string
 	 */
-	public function getTitle(): string {
-		return $this->title;
+	public function getName(): string {
+		return $this->name;
 	}
 	
 	/**
-	 * @param string $title
+	 * @param string $name
 	 */
-	public function setTitle(string $title): void {
-		$this->title = $title;
+	public function setName(string $name): void {
+		$this->name = $name;
 	}
 	
 	/**
 	 * @return string
 	 */
-	public function getThankyouMessage(): string {
-		return $this->thankyouMessage;
+	public function getText(): string {
+		return $this->text;
 	}
 	
 	/**
-	 * @param string $thankyouMessage
+	 * @param string $text
 	 */
-	public function setThankyouMessage(string $thankyouMessage): void {
-		$this->thankyouMessage = $thankyouMessage;
+	public function setText(string $text): void {
+		$this->text = $text;
 	}
+	
+	
 }
