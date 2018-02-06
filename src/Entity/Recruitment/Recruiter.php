@@ -84,7 +84,7 @@ class Recruiter {
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="App\Entity\Interview\InterviewSession", mappedBy="recruiter", cascade={"persist", "merge"})
-	 * @ApiSubresource()
+	 * ApiSubresource()
 	 */
 	protected $sessions;
 	
@@ -92,7 +92,7 @@ class Recruiter {
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="App\Entity\Interview\InterviewSetting", mappedBy="recruiter", cascade={"persist", "merge"})
-	 * @ApiSubresource()
+	 * ApiSubresource()
 	 */
 	protected $interviews;
 	
