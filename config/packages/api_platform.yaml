@@ -20,6 +20,8 @@ api_platform:
 
 
     collection:
+        order_parameter_name: '_order' # the URL query parameter to use is now "_order"
+
         pagination:
             # To enable or disable pagination for all resource collections by default.
             enabled: true
@@ -59,10 +61,15 @@ services:
 
     interview_setting__translation.search_filter:
         parent: 'api_platform.doctrine.orm.search_filter'
-        arguments: [ { translatable: 'exact', title: 'partial', locale: 'exact' } ]
+        arguments: [ { title: 'partial' } ]
         tags: [ 'api_platform.filter' ]
 
-    interview_setting__translation.boolean_filter:
+    entity__translation.search_filter:
+        parent: 'api_platform.doctrine.orm.search_filter'
+        arguments: [ { translatable: 'exact', locale: 'exact' } ]
+        tags: [ 'api_platform.filter' ]
+
+    entity__translation.boolean_filter:
         parent: 'api_platform.doctrine.orm.boolean_filter'
         arguments: [ { empty: ~ } ]
         tags: [ 'api_platform.filter' ]

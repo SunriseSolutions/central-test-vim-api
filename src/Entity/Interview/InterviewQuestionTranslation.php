@@ -14,16 +14,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * To translate the InterviewSetting.
+ * To translate the InterviewQuestion.
  * @ApiResource(attributes={
- *     "filters"={"interview_setting__translation.search_filter",
- *     "entity__translation.search_filter", "entity__translation.boolean_filter"},
+ *     "filters"={"interview_question__translation.search_filter","entity__translation.search_filter", "entity__translation.boolean_filter"},
  * },
 )
  * @ORM\Entity()
  * @ORM\Table(name="interview__setting_translation")
  */
-class InterviewSettingTranslation {
+class InterviewQuestionTranslation {
 	
 	use ORMBehaviors\Translatable\Translation;
 	
