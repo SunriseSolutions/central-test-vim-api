@@ -60,7 +60,7 @@ class SecretController extends Controller {
 		$refreshTokenRepo = $this->getDoctrine()->getRepository(RefreshToken::class);
 		
 		/** @var RefreshToken $rToken */
-		$rToken = $refreshTokenRepo->findOneBy([ 'username' => 'ctas' ], [ 'id' => 'DESC' ]);
+		$rToken = $refreshTokenRepo->findOneBy([ 'username' => 'dummy-with-no-power' ], [ 'id' => 'DESC' ]);
 		
 		// In order to persist new translations, call mergeNewTranslations method, before flush
 		if(!empty($category)){
@@ -69,12 +69,19 @@ class SecretController extends Controller {
 			$title = 'category no existed';
 		}
 		$number = mt_rand(0, $max);
-		if($rToken->getValid() > new \DateTime()) {
+		if(!empty($rToken) && $rToken->getValid() > new \DateTime()) {
 			$rTokenValid = 'rToken Valid';
-		} else {
+		} elseif(!empty($rToken)) {
 			$rTokenValid = 'rToken NOT Valid';
 			$rToken->setValid(clone $rToken->getValid());
 			$rToken->getValid()->modify('+1 year');
+		}else{
+			$rTokenValid = 'rToken NOT EXISTING';
+			$rToken = new RefreshToken();
+			$now = new \DateTime();
+			$rToken->setValid($now->modify('+1 month'));
+			$rToken->setRefreshToken('hello TOKEN');
+			$rToken->setUsername('dummy-with-no-power');
 			$this->get('gesdinet.jwtrefreshtoken.refresh_token_manager')->save($rToken, true);
 			
 			$em->persist($rToken);
