@@ -75,14 +75,14 @@ class InterviewSetting {
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="InterviewSession", mappedBy="setting")
-	 * ApiSubresource()
+	 * @ApiSubresource()
 	 */
 	protected $sessions;
 	
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="InterviewQuestion", mappedBy="setting", cascade={"all"}, orphanRemoval=true)
-	 * ApiSubresource()
+	 * @ApiSubresource()
 	 */
 	protected $questions;
 	
