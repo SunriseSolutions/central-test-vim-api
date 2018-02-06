@@ -63,8 +63,11 @@ class SecretController extends Controller {
 		$rToken = $refreshTokenRepo->findOneBy([ 'username' => 'ctas' ], [ 'id' => 'DESC' ]);
 		
 		// In order to persist new translations, call mergeNewTranslations method, before flush
-		
+		if(!empty($category)){
 		$title  = $category->translate('en')->getTitle();
+		}else{
+			$title = 'category no existed';
+		}
 		$number = mt_rand(0, $max);
 		if($rToken->getValid() > new \DateTime()) {
 			$rTokenValid = 'rToken Valid';
