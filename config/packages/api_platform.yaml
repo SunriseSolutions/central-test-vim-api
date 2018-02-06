@@ -11,11 +11,11 @@ api_platform:
             - { name: 'Authorization', type: 'header' }
     formats:
         jsonld:  ['application/ld+json']
-        jsonhal: ['application/hal+json']
-        xml:     ['application/xml', 'text/xml']
-        json:    ['application/json']
-        yaml:    ['application/x-yaml']
-        csv:     ['text/csv']
+#        jsonhal: ['application/hal+json']
+#        xml:     ['application/xml', 'text/xml']
+#        json:    ['application/json']
+#        yaml:    ['application/x-yaml']
+#        csv:     ['text/csv']
         html:    ['text/html']
 
 
