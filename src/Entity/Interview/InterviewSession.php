@@ -80,7 +80,7 @@ class InterviewSession implements UserInterface, \Serializable {
 	/**
 	 * @var InterviewSession
 	 * @ORM\OneToOne(targetEntity="InterviewSession", mappedBy="actualSession", cascade={"all"}, orphanRemoval=true)
-	 * @ApiSubresource()
+	 * ApiSubresource()
 	 */
 	protected $practiceSession;
 	
@@ -88,7 +88,7 @@ class InterviewSession implements UserInterface, \Serializable {
 	 * @var InterviewSession
 	 * @ORM\OneToOne(targetEntity="InterviewSession", inversedBy="practiceSession", cascade={"persist","merge"})
 	 * @ORM\JoinColumn(name="id_actual_session", referencedColumnName="id")*
-	 * @ApiSubresource()
+	 * ApiSubresource()
 	 */
 	protected $actualSession;
 	
@@ -110,7 +110,7 @@ class InterviewSession implements UserInterface, \Serializable {
 	 * E:\xampp71\htdocs\projects\inspot\vendor\api-platform\core\src\Swagger\Serializer\DocumentationNormalizer.php
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="InterviewAnswer", mappedBy="session", cascade={"persist","merge"}, orphanRemoval=true)
-	 * @ApiSubresource()
+	 * ApiSubresource()
 	 */
 	protected $answers;
 	
