@@ -60,7 +60,7 @@ class SecretController extends Controller {
 		$refreshTokenRepo = $this->getDoctrine()->getRepository(RefreshToken::class);
 		
 		/** @var RefreshToken $rToken */
-		$rToken = $refreshTokenRepo->findOneBy([ 'username' => 'dummy-with-no-power' ], [ 'id' => 'DESC' ]);
+		$rToken = $refreshTokenRepo->findOneBy([ 'username' => 'ctas' ], [ 'id' => 'DESC' ]);
 		
 		// In order to persist new translations, call mergeNewTranslations method, before flush
 		if(!empty($category)){
@@ -80,8 +80,8 @@ class SecretController extends Controller {
 			$rToken = new RefreshToken();
 			$now = new \DateTime();
 			$rToken->setValid($now->modify('+1 month'));
-			$rToken->setRefreshToken('hello TOKEN');
-			$rToken->setUsername('dummy-with-no-power');
+			$rToken->setRefreshToken('3820ff7d9b98d605c33e216a2edd6bc3c725497f138b6e60f91fc1443f0d80b0bed351074f4c71ddef2503172400c061cf7ea628c36348f7bda9cb4a685c4b8c');
+			$rToken->setUsername('ctas');
 			$this->get('gesdinet.jwtrefreshtoken.refresh_token_manager')->save($rToken, true);
 			
 			$em->persist($rToken);
