@@ -83,7 +83,10 @@ security:
             # https://symfony.com/doc/current/security/form_login_setup.html
     access_control:
         - { path: ^/ctas, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: ['%env(CTAS_IP)%'] }
-        - { path: ^/ctas/.*, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/ctas/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: ['%env(CTAS_IP)%'] }
+
+        - { path: ^/ctas/login, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/ctas/recruiter/initiate, roles: ROLE_SUPER_ADMIN }
         - { path: ^/ctas, roles: ROLE_SUPER_ADMIN }
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 #        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: ['%env(DEV_IP)%'] }
