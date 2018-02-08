@@ -84,7 +84,7 @@ security:
     access_control:
         - { path: ^/ctas, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: ['%env(CTAS_IP)%'] }
         - { path: ^/ctas, roles: ROLE_SUPER_ADMIN }
-        - { path: ^/ctas/login, roles: ROLE_SUPER_ADMIN }
+
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 #        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: ['%env(DEV_IP)%'] }
         - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
