@@ -9,6 +9,7 @@ security:
 #            encode_as_base64: false
 
     role_hierarchy:
+        ROLE_RECRUITER: ROLE_CANDIDATE
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Recruitment\Recruiter;
+use App\Service\Recruitment\RecruiterService;
 use Gesdinet\JWTRefreshTokenBundle\Entity\RefreshToken;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,25 +14,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class CTASController extends Controller {
 	
 	/**
-	 * @Route("/ctas/initiate-employer", name="app_api_employer_signup"
+	 * @Route("/ctas/initiate-recruiter", name="app_api_recruiter_signup"
 	 * )
 	 */
 	public function initiateRecruiter(Request $request) {
-		$recruiterId   = $request->get('adminEmail', '00000');
-		$adminEmail    = $request->get('adminEmail', 'noadmin-provided@gmail.com');
-		$recruiterRepo = $this->getDoctrine()->getRepository(Recruiter::class);
-		/** @var Recruiter $recruiter */
-		$recruiter = $recruiterRepo->findOneBy([ 'adminEmail' => $adminEmail, 'recruiterId' => $recruiterId ]);
-		$em        = $this->get('doctrine.orm.default_entity_manager');
-		if(empty($recruiter)) {
-			$recruiter = new Recruiter();
-			$recruiter->setAdminEmail($adminEmail);
-			$recruiter->setRecruiterId($recruiterId);
-			$recruiter->initiateEmployerCode();
-			$em->persist($recruiter);
-			$em->flush();
-		}
+		$recruiterId = $request->get('_username', '0');
+		$adminEmail  = $request->get('_password', 'noadmin-provided@gmail.com');
+		$jwt         = $this->get('app.recruiter')->initiateRecruiter($recruiterId, $adminEmail);
 		
-		return new JsonResponse([ 'ok' . $recruiterId . '  ' . $adminEmail ]);
+		return new JsonResponse([ "token" => $jwt ]);
 	}
 }

@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * To hold data about the InterviewSetting.
  * @ApiResource(attributes={
+ *     "access_control"="is_granted('ROLE_RECRUITER')",
  *     "filters"={"interview_setting.search_filter"},
  *     "order"={"updatedAt": "DESC","createdAt": "DESC"},
  *     "normalization_context"={"groups"={"read_interview_setting"}},

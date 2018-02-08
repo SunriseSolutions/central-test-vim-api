@@ -18,7 +18,6 @@ api_platform:
 #        csv:     ['text/csv']
         html:    ['text/html']
 
-
     collection:
         order_parameter_name: '_order' # the URL query parameter to use is now "_order"
 
