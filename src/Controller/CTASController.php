@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CTASController extends Controller {
 	
 	/**
-	 * @Route("/ctas/initiate-recruiter", name="app_api_recruiter_signup"
+	 * @Route("/ctas/recruiter/initiate", name="app_api_recruiter_initiate"
 	 * )
 	 */
 	public function initiateRecruiter(Request $request) {
