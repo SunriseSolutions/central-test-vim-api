@@ -33,6 +33,13 @@ class InterviewSetting {
 	use ORMBehaviors\Translatable\Translatable;
 	
 	/**
+	 * @var array
+	 * @Groups({"read_interview_setting","write_interview_setting"})
+	 */
+	protected $translations;
+	
+	
+	/**
 	 * @var int
 	 * @ORM\Id
 	 * @ORM\Column(type="integer",options={"unsigned":true})
@@ -58,6 +65,7 @@ class InterviewSetting {
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="InterviewSession", mappedBy="setting")
 	 * ApiSubresource()
+	 *
 	 */
 	protected $sessions;
 	
@@ -89,18 +97,21 @@ class InterviewSetting {
 	/**
 	 * @var integer
 	 * @ORM\Column(type="integer")
+	 * @Groups({"read_interview_setting","write_interview_setting"})
 	 */
 	protected $expireIn = 24;
 	
 	/**
 	 * @var integer
 	 * @ORM\Column(type="integer")
+	 * @Groups({"read_interview_setting","write_interview_setting"})
 	 */
 	protected $readingTimeLimit = 30;
 	
 	/**
 	 * @var integer
 	 * @ORM\Column(type="integer")
+	 * @Groups({"read_interview_setting","write_interview_setting"})
 	 */
 	protected $answerTimeLimit = 180;
 	

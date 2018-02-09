@@ -18,8 +18,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * To hold data about the Recruiter/Employer.
  * @ApiResource(attributes={
- * })
- *
+ *     "access_control"="is_granted('ROLE_SUPER_ADMIN')",
+ *     "normalization_context"={"groups"={"read_recruiter"}},
+ *     "denormalization_context"={"groups"={"write_recruiter"}}
+ * },
+)
+ 
  * @ORM\Entity()
  * @ORM\Table(name="recruitment__recruiter")
  */
@@ -176,7 +180,6 @@ class Recruiter implements UserInterface, \Serializable {
 	 */
 	protected $sessions;
 	
-	
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="App\Entity\Interview\InterviewSetting", mappedBy="recruiter", cascade={"persist", "merge"})
@@ -187,18 +190,21 @@ class Recruiter implements UserInterface, \Serializable {
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=50)
+	 * @Groups({"read_recruiter","write_recruiter"})
 	 */
 	protected $recruiterId;
 	
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=255)
+	 * @Groups({"read_recruiter","write_recruiter"})
 	 */
 	protected $employerCode;
 	
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=50)
+	 * @Groups({"read_recruiter","write_recruiter"})
 	 */
 	protected $adminEmail;
 //////////////////////////////////////
