@@ -38,7 +38,6 @@ class InterviewSetting {
 	 */
 	protected $translations;
 	
-	
 	/**
 	 * @var int
 	 * @ORM\Id
