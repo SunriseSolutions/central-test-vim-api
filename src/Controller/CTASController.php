@@ -24,6 +24,6 @@ class CTASController extends Controller {
 		$recruiter        = $recruiterService->initiateRecruiter($recruiterId, $adminEmail);
 		$jwt              = $recruiterService->generateTokenFromRecruiter($recruiter);
 		
-		return new JsonResponse([ "token" => $jwt, '@recruiter' => '/api/recruiters/' . $recruiter->getId() ]);
+		return new JsonResponse([ "token" => $jwt, 'recruiter_uri' => '/api/recruiters/' . $recruiter->getId() ]);
 	}
 }
