@@ -18,12 +18,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * To hold data about the Recruiter/Employer.
  * @ApiResource(attributes={
- *     "access_control"="is_granted('ROLE_SUPER_ADMIN')",
  *     "normalization_context"={"groups"={"read_recruiter"}},
  *     "denormalization_context"={"groups"={"write_recruiter"}}
  * },
+ *     collectionOperations={
+ *         "get"={"method"="GET", "access_control"="is_granted('ROLE_SUPER_ADMIN')"},
+ *         "post"={"method"="POST", "access_control"="is_granted('ROLE_SUPER_ADMIN')"}
+ *     },
+ *     itemOperations={
+ *         "get"={"method"="GET", "access_control"="is_granted('ROLE_SUPER_ADMIN') or object.getRecruiterId() == user.getUsername()"},
+ *         "delete"={"method"="DELETE", "access_control"="is_granted('ROLE_SUPER_ADMIN')"},
+ *         "put"={"method"="PUT", "access_control"="is_granted('ROLE_SUPER_ADMIN')"}
+ *     }
+ *
 )
- 
  * @ORM\Entity()
  * @ORM\Table(name="recruitment__recruiter")
  */

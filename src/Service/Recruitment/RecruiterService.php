@@ -36,6 +36,10 @@ class RecruiterService extends BaseService {
 			$em->flush();
 		}
 		
+		return $recruiter;
+	}
+	
+	public function generateTokenFromRecruiter(Recruiter $recruiter) {
 		return $this->jwtManager->create($recruiter);
 	}
 }

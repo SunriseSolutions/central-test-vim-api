@@ -18,10 +18,12 @@ class CTASController extends Controller {
 	 * )
 	 */
 	public function initiateRecruiter(Request $request) {
-		$recruiterId = $request->get('_username', '0');
-		$adminEmail  = $request->get('_password', 'noadmin-provided@gmail.com');
-		$jwt         = $this->get('app.recruiter')->initiateRecruiter($recruiterId, $adminEmail);
+		$recruiterId      = $request->get('_username', '0');
+		$adminEmail       = $request->get('_password', 'noadmin-provided@gmail.com');
+		$recruiterService = $this->get('app.recruiter');
+		$recruiter        = $recruiterService->initiateRecruiter($recruiterId, $adminEmail);
+		$jwt              = $recruiterService->generateTokenFromRecruiter($recruiter);
 		
-		return new JsonResponse([ "token" => $jwt ]);
+		return new JsonResponse([ "token" => $jwt, '@recruiter' => '/api/recruiters/' . $recruiter->getId() ]);
 	}
 }
