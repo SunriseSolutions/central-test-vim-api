@@ -18,6 +18,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(attributes={
  *     "filters"={"interview_setting__translation.search_filter",
  *     "entity__translation.search_filter", "entity__translation.boolean_filter"},
+ *     "normalization_context"={"groups"={"read_interview_setting"}},
+ *     "denormalization_context"={"groups"={"write_interview_setting"}}
+ *
  * },
 )
  * @ORM\Entity()
@@ -29,13 +32,21 @@ class InterviewSettingTranslation {
 	
 	/**
 	 * @var string
+	 * @Groups({"read_interview_setting","write_interview_setting"})
+	 */
+	protected $locale;
+	
+	/**
+	 * @var string
 	 * @ORM\Column(type="string", length=255)
+	 * @Groups({"read_interview_setting","write_interview_setting"})
 	 */
 	protected $title;
 	
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=255)
+	 * @Groups({"read_interview_setting","write_interview_setting"})
 	 */
 	protected $thankyouMessage;
 	
