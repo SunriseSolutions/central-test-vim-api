@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -23,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "normalization_context"={"groups"={"read_interview_setting"}},
  *     "denormalization_context"={"groups"={"write_interview_setting"}}
  * },
- )
+)
  *
  * @ORM\Entity()
  * @ORM\Table(name="interview__setting")
@@ -73,8 +74,20 @@ class InterviewSetting {
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="InterviewQuestion", mappedBy="setting", cascade={"all"}, orphanRemoval=true)
 	 * ApiSubresource()
+	 * @ApiProperty(attributes={"fetchEager": true})
+	 * @Groups({"read_interview_setting","write_interview_setting"})
 	 */
 	protected $questions;
+	
+	public function addQuestion(InterviewQuestion $question) {
+		$this->questions->add($question);
+		$question->setSetting($this);
+	}
+	
+	public function removeQuestion(InterviewQuestion $question) {
+		$this->questions->removeElement($question);
+		$question->setSetting(null);
+	}
 	
 	/**
 	 * @var \DateTime
@@ -221,14 +234,14 @@ class InterviewSetting {
 	/**
 	 * @return Collection
 	 */
-	public function getQuestions(): Collection {
+	public function getQuestions(): ?Collection {
 		return $this->questions;
 	}
 	
 	/**
 	 * @param Collection $questions
 	 */
-	public function setQuestions(Collection $questions): void {
+	public function setQuestions($questions): void {
 		$this->questions = $questions;
 	}
 	
