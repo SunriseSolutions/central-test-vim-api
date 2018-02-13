@@ -187,6 +187,13 @@ class InterviewSession implements UserInterface, \Serializable {
 	
 	/**
 	 * @var string
+	 * @ORM\Column(type="string", length=5)
+	 * @Groups({"read_interview_session","write_interview_session"})
+	 */
+	protected $locale;
+	
+	/**
+	 * @var string
 	 * @ORM\Column(type="string", length=500)
 	 * @Groups({"read_interview_session","write_interview_session"})
 	 */
@@ -558,6 +565,20 @@ class InterviewSession implements UserInterface, \Serializable {
 	 */
 	public function setUpdatedAt(\DateTime $updatedAt): void {
 		$this->updatedAt = $updatedAt;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getLocale(): string {
+		return $this->locale;
+	}
+	
+	/**
+	 * @param string $locale
+	 */
+	public function setLocale(string $locale): void {
+		$this->locale = $locale;
 	}
 	
 }
