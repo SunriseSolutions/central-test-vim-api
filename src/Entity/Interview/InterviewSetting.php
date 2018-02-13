@@ -43,6 +43,7 @@ class InterviewSetting {
 	 * @ORM\Id
 	 * @ORM\Column(type="integer",options={"unsigned":true})
 	 * @ORM\GeneratedValue(strategy="AUTO")
+	 * @Groups({"read_interview_setting"})
 	 */
 	protected $id;
 	
