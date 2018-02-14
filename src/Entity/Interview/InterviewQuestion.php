@@ -85,7 +85,7 @@ class InterviewQuestion {
 	/**
 	 * @param InterviewSetting $setting
 	 */
-	public function setSetting(InterviewSetting $setting): void {
+	public function setSetting(InterviewSetting $setting = null): void {
 		$this->setting = $setting;
 	}
 	
