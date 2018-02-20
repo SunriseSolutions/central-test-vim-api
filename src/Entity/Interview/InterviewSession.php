@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Entity\Interview;
 
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -23,6 +24,41 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Table(name="interview__session")
  */
 class InterviewSession implements UserInterface, \Serializable {
+	public function initiateData() {
+		if(empty($this->locale)) {
+			$this->locale = 'en';
+		}
+		$this->copyFromSetting();
+		$this->initiateCandidateCode();
+		$this->employerCode = $this->recruiter->getEmployerCode();
+	}
+	
+	public function initiateCandidateCode() {
+		if(empty($this->candidateCode)) {
+			$this->candidateCode = $this->recruiter->generate20DigitCode();
+		}
+		
+		return $this->candidateCode;
+	}
+	
+	public function copyFromSetting() {
+		if( ! empty($this->setting)) {
+			$vars = get_object_vars($this);
+			foreach($vars as $key => $value) {
+				if(empty($value) && property_exists($this->setting, $key)) {
+					$getter     = 'get' . ucfirst($key);
+					$this->$key = $this->setting->$getter();
+				}
+			}
+			$this->deadline = new \DateTime();
+			$this->deadline->modify('+ ' . $this->setting->getExpireIn() . ' days');
+			
+			/** @var InterviewSettingTranslation $translation */
+			$translation           = $this->setting->translate($this->locale);
+			$this->title           = $translation->getTitle();
+			$this->thankyouMessage = $translation->getThankyouMessage();
+		}
+	}
 	
 	/////// Start of UserInterface Impl ///////
 	public function getUsername() {
@@ -73,7 +109,7 @@ class InterviewSession implements UserInterface, \Serializable {
 	/////// End of UserInterface Impl ///////
 	///
 	function __construct() {
-		$this->answers = new ArrayCollection();
+		$this->answers   = new ArrayCollection();
 		$this->createdAt = new \DateTime();
 	}
 	
@@ -472,7 +508,7 @@ class InterviewSession implements UserInterface, \Serializable {
 	/**
 	 * @return string
 	 */
-	public function getLogoUrl(): string {
+	public function getLogoUrl(): ?string {
 		return $this->logoUrl;
 	}
 	
@@ -486,7 +522,7 @@ class InterviewSession implements UserInterface, \Serializable {
 	/**
 	 * @return string
 	 */
-	public function getThankyouMessage(): string {
+	public function getThankyouMessage(): ?string {
 		return $this->thankyouMessage;
 	}
 	

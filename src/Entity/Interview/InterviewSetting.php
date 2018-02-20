@@ -220,7 +220,7 @@ class InterviewSetting {
 	/**
 	 * @return Collection
 	 */
-	public function getSessions(): Collection {
+	public function getSessions(): ?Collection {
 		return $this->sessions;
 	}
 	
@@ -262,7 +262,7 @@ class InterviewSetting {
 	/**
 	 * @return \DateTime
 	 */
-	public function getUpdatedAt(): \DateTime {
+	public function getUpdatedAt(): ?\DateTime {
 		return $this->updatedAt;
 	}
 	
@@ -276,7 +276,7 @@ class InterviewSetting {
 	/**
 	 * @return string
 	 */
-	public function getLogoUrl(): string {
+	public function getLogoUrl(): ?string {
 		return $this->logoUrl;
 	}
 	

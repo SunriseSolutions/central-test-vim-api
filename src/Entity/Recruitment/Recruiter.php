@@ -157,6 +157,10 @@ class Recruiter implements UserInterface, \Serializable {
 		return $codeStr;
 	}
 	
+	public function generate20DigitCode() {
+		return $this->generate4DigitCode() . '-' . $this->generate4DigitCode() . '-' . $this->generate4DigitCode() . '-' . $this->generate4DigitCode() . '-' . date('my');
+	}
+	
 	public function initiateEmployerCode() {
 		if(empty($this->employerCode)) {
 			$date      = new \DateTime();
