@@ -118,6 +118,7 @@ class InterviewSession implements UserInterface, \Serializable {
 	 * @ORM\Id
 	 * @ORM\Column(type="integer",options={"unsigned":true})
 	 * @ORM\GeneratedValue(strategy="AUTO")
+	 * @Groups({"read_interview_session"})
 	 */
 	protected $id;
 	
