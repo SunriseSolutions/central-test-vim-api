@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(attributes={
+ *     "access_control"="is_granted('ROLE_RECRUITER') or is_granted('ROLE_CANDIDATE')",
  *     "filters"={"interview_session.search_filter"},
  *     "order"={"updatedAt": "DESC","createdAt": "DESC"},
  *     "normalization_context"={"groups"={"read_interview_session"}},

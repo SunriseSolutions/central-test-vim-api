@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Recruitment\Recruiter;
-use App\Service\Recruitment\RecruiterService;
+use App\Service\Recruitment\UserService;
 use Gesdinet\JWTRefreshTokenBundle\Entity\RefreshToken;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,7 +20,7 @@ class CTASController extends Controller {
 	public function initiateRecruiter(Request $request) {
 		$recruiterId      = $request->get('_username', '0');
 		$adminEmail       = $request->get('_password', 'noadmin-provided@gmail.com');
-		$recruiterService = $this->get('app.recruiter');
+		$recruiterService = $this->get('app.user');
 		$recruiter        = $recruiterService->initiateRecruiter($recruiterId, $adminEmail);
 		$jwt              = $recruiterService->generateTokenFromRecruiter($recruiter);
 		

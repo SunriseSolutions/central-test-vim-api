@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Recruitment;
+namespace App\Service;
 
 use App\Entity\Recruitment\Recruiter;
 use App\Service\BaseService;
@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class RecruiterService extends BaseService {
+class UserService extends BaseService {
 	/**
 	 * @var JWTManager
 	 */
@@ -37,6 +37,44 @@ class RecruiterService extends BaseService {
 		}
 		
 		return $recruiter;
+	}
+	
+	public function getUser() {
+//		$request = $this->container->get('request_stack')->getCurrentRequest();
+//		$bearer  = $request->headers->get('Authorization');
+//		if(empty($bearer)) {
+//			return null;
+//		}
+//
+//		$bearerStr = 'Bearer ';
+//		if(strpos($bearer, $bearerStr) < 0) {
+//			return null;
+//		}
+		
+		$ts          = $this->container->get('security.token_storage');
+		$token       = $ts->getToken();
+		$credentials = $token->getCredentials();
+		if(empty($token)) {
+			return null;
+		}
+		
+		return $this->jwtManager->decode($token);
+	}
+	
+	public function getUsername() {
+		$payload = $this->getUser();
+		
+		return $payload[ $this->getUserIdentityField() ];
+	}
+	
+	public function getRoles() {
+		$payload = $this->getUser();
+		
+		return $payload['roles'];
+	}
+	
+	public function getUserIdentityField() {
+		return $this->jwtManager->getUserIdentityField();
 	}
 	
 	public function generateTokenFromRecruiter(Recruiter $recruiter) {
