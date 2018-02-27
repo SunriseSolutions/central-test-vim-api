@@ -49,7 +49,7 @@ class Recruiter implements UserInterface, \Serializable {
 		return serialize(array(
 			$this->id,
 			
-			$this->recruiterId,
+			$this->id,
 			$this->adminEmail,
 			
 			// see section on salt below
@@ -62,7 +62,7 @@ class Recruiter implements UserInterface, \Serializable {
 		list (
 			$this->id,
 			
-			$this->recruiterId,
+			$this->id,
 			$this->adminEmail,
 			// see section on salt below
 			// $this->salt
@@ -118,7 +118,7 @@ class Recruiter implements UserInterface, \Serializable {
 	 * @return string The username
 	 */
 	public function getUsername() {
-		return $this->recruiterId;
+		return $this->id;
 	}
 	
 	/**
