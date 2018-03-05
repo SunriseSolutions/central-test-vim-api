@@ -109,8 +109,8 @@ class InterviewSetting {
 	protected $enabled = true;
 	
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @var string
+	 * @ORM\Column(type="string")
 	 * @Groups({"read_interview_setting","write_interview_setting"})
 	 */
 	protected $creatorId;
@@ -296,17 +296,19 @@ class InterviewSetting {
 	}
 	
 	/**
-	 * @return int
+	 * @return string
 	 */
-	public function getCreatorId(): int {
+	public function getCreatorId(): string {
 		return $this->creatorId;
 	}
 	
 	/**
-	 * @param int $creatorId
+	 * @param string $creatorId
 	 */
-	public function setCreatorId(int $creatorId): void {
+	public function setCreatorId(string $creatorId): void {
 		$this->creatorId = $creatorId;
 	}
+	
+	
 	
 }
