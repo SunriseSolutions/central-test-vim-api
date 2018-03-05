@@ -113,6 +113,13 @@ class InterviewSetting {
 	 * @ORM\Column(type="integer")
 	 * @Groups({"read_interview_setting","write_interview_setting"})
 	 */
+	protected $creatorId;
+	
+	/**
+	 * @var integer
+	 * @ORM\Column(type="integer")
+	 * @Groups({"read_interview_setting","write_interview_setting"})
+	 */
 	protected $expireIn = 24;
 	
 	/**
@@ -288,5 +295,18 @@ class InterviewSetting {
 		$this->logoUrl = $logoUrl;
 	}
 	
+	/**
+	 * @return int
+	 */
+	public function getCreatorId(): int {
+		return $this->creatorId;
+	}
+	
+	/**
+	 * @param int $creatorId
+	 */
+	public function setCreatorId(int $creatorId): void {
+		$this->creatorId = $creatorId;
+	}
 	
 }
