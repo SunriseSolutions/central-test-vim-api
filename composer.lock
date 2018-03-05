@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c8526ac4b23783f4acd3d982abc9b3b5",
+    "content-hash": "b00fb72768dc54ee4ddeb3ad3f63fa6e",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -3823,16 +3823,16 @@
         },
         {
             "name": "symfony/serializer",
-            "version": "v4.0.3",
+            "version": "v4.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/serializer.git",
-                "reference": "f039d9d4352f5436a70571cc48dbb518af171940"
+                "reference": "0526b430c8548520fd5817f425d9a3d8a11a21e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/serializer/zipball/f039d9d4352f5436a70571cc48dbb518af171940",
-                "reference": "f039d9d4352f5436a70571cc48dbb518af171940",
+                "url": "https://api.github.com/repos/symfony/serializer/zipball/0526b430c8548520fd5817f425d9a3d8a11a21e1",
+                "reference": "0526b430c8548520fd5817f425d9a3d8a11a21e1",
                 "shasum": ""
             },
             "require": {
@@ -3897,7 +3897,7 @@
             ],
             "description": "Symfony Serializer Component",
             "homepage": "https://symfony.com",
-            "time": "2018-01-03T07:38:00+00:00"
+            "time": "2018-02-19T12:18:43+00:00"
         },
         {
             "name": "symfony/translation",

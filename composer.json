@@ -16,6 +16,7 @@
         "symfony/lts": "^4@dev",
         "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "^1.0",
+        "symfony/serializer": "^4.0",
         "symfony/yaml": "^4.0"
     },
     "require-dev": {

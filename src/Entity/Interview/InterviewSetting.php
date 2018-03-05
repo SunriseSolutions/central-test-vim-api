@@ -92,6 +92,7 @@ class InterviewSetting {
 	/**
 	 * @var \DateTime
 	 * @ORM\Column(type="datetime")
+	 * @Groups({"read_interview_setting"})
 	 */
 	protected $createdAt;
 	
