@@ -54,7 +54,12 @@ api_platform:
 services:
     interview_setting.search_filter:
         parent: 'api_platform.doctrine.orm.search_filter'
-        arguments: [ { recruiter: 'exact', title: 'partial' } ]
+        arguments: [ { recruiter: 'exact', translations.title: 'partial',createdAt: 'partial',creatorName: 'partial' } ]
+        tags: [ 'api_platform.filter' ]
+
+    interview_setting__translation.search_filter:
+        parent: 'api_platform.doctrine.orm.search_filter'
+        arguments: [ { title: 'partial' } ]
         tags: [ 'api_platform.filter' ]
 
     interview_session.search_filter:
@@ -62,10 +67,6 @@ services:
         arguments: [ { recruiter: 'exact', setting: 'exact', employerCode: 'exact', candidateCode: 'exact', title: 'partial' } ]
         tags: [ 'api_platform.filter' ]
 
-    interview_setting__translation.search_filter:
-        parent: 'api_platform.doctrine.orm.search_filter'
-        arguments: [ { title: 'partial' } ]
-        tags: [ 'api_platform.filter' ]
 
     entity__translation.search_filter:
         parent: 'api_platform.doctrine.orm.search_filter'
