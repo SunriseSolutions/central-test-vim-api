@@ -45,7 +45,10 @@ final class InterviewSessionSubscriber implements EventSubscriberInterface {
 		if($request->isMethod('get') && $class === InterviewSession::class) {
 			$rs = $this->recruiterService;
 			if($controller === 'api_platform.action.get_collection') {
-				$request->query->add([ 'recruiter' => $rs->getUsername() ]);
+				$filters              = $request->attributes->get('_api_filters');
+				$filters['recruiter'] = $rs->getUsername();
+				$request->attributes->set('_api_filters', $filters);
+				
 			} elseif($controller === 'api_platform.action.get_item') {
 			
 			}

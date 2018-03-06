@@ -29,12 +29,15 @@ final class InterviewSettingSubscriber implements EventSubscriberInterface {
 	
 	public function filterData(GetResponseEvent $event) {
 		$request    = $event->getRequest();
-		$controller = $request->attributes->get('_controller');
 		$class      = $request->attributes->get('_api_resource_class');
+		$controller = $request->attributes->get('_controller');
 		if($request->isMethod('get') && $class === InterviewSetting::class && $controller === 'api_platform.action.get_collection') {
 			$rs = $this->recruiterService;
-			
-			$request->query->add([ 'recruiter' => strval($rs->getUsername()) ]);
+//			$request->query->set('recruiter', $rs->getUsername());
+			$filters              = $request->attributes->get('_api_filters');
+			$filters['recruiter'] = $rs->getUsername();
+			$request->attributes->set('_api_filters', $filters);
+//			var_dump($request);
 		}
 		
 		

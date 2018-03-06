@@ -64,7 +64,7 @@ class UserService extends BaseService {
 	public function getUsername() {
 		$payload = $this->getUser();
 		
-		return $payload[ $this->getUserIdentityField() ];
+		return strval($payload[ $this->getUserIdentityField() ]);
 	}
 	
 	public function getRoles() {
