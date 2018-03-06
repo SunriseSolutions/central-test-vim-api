@@ -116,14 +116,14 @@ class InterviewSetting {
 	
 	/**
 	 * @var string
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", nullable=true)
 	 * @Groups({"read_interview_setting","write_interview_setting"})
 	 */
 	protected $creatorId;
 	
 	/**
 	 * @var string
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", nullable=true)
 	 * @Groups({"read_interview_setting","write_interview_setting"})
 	 */
 	protected $creatorName;
