@@ -3,6 +3,7 @@
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
+use ApiPlatform\Core\Util\RequestParser;
 use App\Entity\Interview\InterviewSetting;
 use App\Service\UserService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -33,11 +34,12 @@ final class InterviewSettingSubscriber implements EventSubscriberInterface {
 		$controller = $request->attributes->get('_controller');
 		if($request->isMethod('get') && $class === InterviewSetting::class && $controller === 'api_platform.action.get_collection') {
 			$rs = $this->recruiterService;
-//			$request->query->set('recruiter', $rs->getUsername());
-			$filters              = $request->attributes->get('_api_filters');
-			$filters['recruiter'] = $rs->getUsername();
+			$request->query->set('recruiter', $rs->getUsername());
+			
+			$queryString = RequestParser::getQueryString($request);
+			$filters     = $queryString ? RequestParser::parseRequestParams($queryString) : null;
 			$request->attributes->set('_api_filters', $filters);
-//			var_dump($request);
+//			var_dump($request->attributes);exit();
 		}
 		
 		
