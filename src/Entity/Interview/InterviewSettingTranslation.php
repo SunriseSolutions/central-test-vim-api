@@ -2,6 +2,8 @@
 
 namespace App\Entity\Interview;
 
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
@@ -23,6 +25,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * },
 )
+ *
+ * @ApiFilter(OrderFilter::class, properties={"title"}, arguments={"orderParameterName"="order"})
+ 
  * @ORM\Entity()
  * @ORM\Table(name="interview__setting_translation")
  */

@@ -4,7 +4,10 @@ namespace App\Entity\Interview;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+
 use App\Entity\Recruitment\Recruiter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -26,6 +29,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * },
 )
  *
+ *
+ * @ApiFilter(OrderFilter::class, properties={"creatorName", "createdAt", "translations.title"}, arguments={"orderParameterName"="order"})
+ 
  * @ORM\Entity()
  * @ORM\Table(name="interview__setting")
  */
@@ -114,6 +120,13 @@ class InterviewSetting {
 	 * @Groups({"read_interview_setting","write_interview_setting"})
 	 */
 	protected $creatorId;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 * @Groups({"read_interview_setting","write_interview_setting"})
+	 */
+	protected $creatorName;
 	
 	/**
 	 * @var integer
@@ -309,6 +322,18 @@ class InterviewSetting {
 		$this->creatorId = $creatorId;
 	}
 	
+	/**
+	 * @return string
+	 */
+	public function getCreatorName(): string {
+		return $this->creatorName;
+	}
 	
+	/**
+	 * @param string $creatorName
+	 */
+	public function setCreatorName(string $creatorName): void {
+		$this->creatorName = $creatorName;
+	}
 	
 }

@@ -89,9 +89,6 @@
             "ref": "bb31a3bbec00a8fc8aa1c9fbf9b0ef9fc492f93d"
         }
     },
-    "gecko-packages/gecko-php-unit": {
-        "version": "v3.1"
-    },
     "gesdinet/jwt-refresh-token-bundle": {
         "version": "v0.3.2"
     },
