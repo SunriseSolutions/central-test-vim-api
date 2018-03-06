@@ -38,7 +38,9 @@ final class InterviewSettingSubscriber implements EventSubscriberInterface {
 			
 			$queryString = RequestParser::getQueryString($request);
 			$filters     = $queryString ? RequestParser::parseRequestParams($queryString) : null;
+			$filters['recruiter'] = $rs->getUsername();
 			$request->attributes->set('_api_filters', $filters);
+
 //			var_dump($request->attributes);exit();
 		}
 		
