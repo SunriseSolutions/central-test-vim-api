@@ -328,7 +328,7 @@ class InterviewSession implements UserInterface, \Serializable {
 	/**
 	 * @return InterviewSetting
 	 */
-	public function getSetting(): InterviewSetting {
+	public function getSetting(): ?InterviewSetting {
 		return $this->setting;
 	}
 	
