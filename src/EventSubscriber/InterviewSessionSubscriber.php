@@ -3,6 +3,7 @@
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
+use ApiPlatform\Core\Util\RequestParser;
 use App\Entity\Interview\InterviewSession;
 use App\Service\UserService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
