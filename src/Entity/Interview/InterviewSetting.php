@@ -8,6 +8,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
+use App\Filter\InterviewSettingFilter;
 use App\Entity\Recruitment\Recruiter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -31,6 +32,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  *
  * @ApiFilter(OrderFilter::class, properties={"creatorName", "createdAt", "translations.title"}, arguments={"orderParameterName"="order"})
+ * @ApiFilter(InterviewSettingFilter::class, properties={"translations.title"})
  
  * @ORM\Entity()
  * @ORM\Table(name="interview__setting")
